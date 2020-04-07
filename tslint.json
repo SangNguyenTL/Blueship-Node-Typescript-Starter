@@ -1,0 +1,26 @@
+{
+  "defaultSeverity": "warn",
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "rules": {
+    "ordered-imports": [
+      true,
+      {
+        "named-imports-order": "case-insensitive"
+      }
+    ],
+    "no-empty": false,
+    "object-literal-sort-keys": false,
+    "no-namespace": [true, "allow-declarations"],
+    "interface-name": false,
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": [true, ["@", "express-serve-static-core"]],
+    "whitespace": [
+      true,
+      "check-operator",
+      "check-branch",
+      "check-operator",
+      "check-typecast"
+    ],
+    "eofline": false
+  }
+}

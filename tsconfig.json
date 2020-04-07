@@ -1,0 +1,28 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "es5",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./node_modules/*"],
+      "@/*": ["./src/*"]
+    },
+    "typeRoots": ["@types", "./node_modules/@types"],
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "watch": false
+  },
+  "include": ["./src/**/*"],
+  "ts-node": {
+    "files": true
+  }
+}
