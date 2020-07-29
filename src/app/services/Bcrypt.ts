@@ -11,7 +11,7 @@ class Hash {
     return new Promise<string>((resolve, reject) =>
       bcrypt.hash(this.originStr, this.rounds, (err, hash) => {
         return err ? reject(err) : resolve(hash)
-      }),
+      })
     )
   }
 
@@ -22,8 +22,8 @@ class Hash {
         this.originStr,
         (err, isMatch: boolean) => {
           return err ? reject(err) : resolve(isMatch)
-        },
-      ),
+        }
+      )
     )
   }
 }

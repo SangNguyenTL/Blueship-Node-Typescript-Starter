@@ -25,6 +25,6 @@ passport.use(
         err = error
       }
       return done(err, user)
-    },
-  ),
+    }
+  )
 )

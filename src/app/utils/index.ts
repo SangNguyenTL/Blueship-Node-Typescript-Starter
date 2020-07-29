@@ -23,7 +23,7 @@ export function chunkArray<T>(arr: T[], chunkSize: number) {
 export function generateFields(
   schema: Schema,
   schemaDefinition: SchemaDefinition,
-  possibleFields: string[],
+  possibleFields: string[]
 ) {
   return Object.keys(schemaDefinition)
     .filter((nameField) => {
@@ -50,7 +50,7 @@ export function getIps() {
       .map((addresses) =>
         addresses
           .filter((address) => !address.internal && address.family === 'IPv4')
-          .map((address) => address.address),
-      ),
+          .map((address) => address.address)
+      )
   )
 }

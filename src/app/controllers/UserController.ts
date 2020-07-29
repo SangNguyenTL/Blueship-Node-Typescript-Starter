@@ -36,7 +36,7 @@ class UserController extends AbstractController<Model<IUser>> {
       new ResponseResult({
         message: 'Successfully get user information',
         data: user,
-      }),
+      })
     )
   }
 
@@ -58,7 +58,7 @@ class UserController extends AbstractController<Model<IUser>> {
       new ResponseResult({
         message: 'Successfully updated information',
         data: subUser,
-      }),
+      })
     )
   }
 }

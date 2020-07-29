@@ -116,7 +116,7 @@ class AppConfig {
         dotenv.config({ path: '.env' })
       } else {
         logger.debug(
-          'Using .env.example file to supply config environment variables',
+          'Using .env.example file to supply config environment variables'
         )
         dotenv.config({ path: '.env.example' }) // you can delete this after you create your own .env file!
       }

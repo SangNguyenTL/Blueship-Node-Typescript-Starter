@@ -11,7 +11,7 @@ const errorHandler = (error: RequestResponse<any>) => {
 function request<T>(
   url: string,
   options: RequestOptionsInit,
-  token?: string,
+  token?: string
 ): Promise<T> {
   let headers = options.headers || {}
   if (token) {

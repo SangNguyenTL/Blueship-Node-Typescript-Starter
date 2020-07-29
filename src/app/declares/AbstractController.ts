@@ -44,7 +44,7 @@ export default abstract class AbstractController<T extends Model<any>> {
         user,
       } = req
       const item = await this.model.findById(id).exec()
-      const flag = item && item.creator._id === (user as IUser)._id
+      const flag = item && item.creator.id === (user as IUser).id
       if (item) {
         req.exData = item
       }
@@ -63,7 +63,7 @@ export default abstract class AbstractController<T extends Model<any>> {
   public checkValidArguments(
     req: Request,
     _: Response,
-    next: NextFunction,
+    next: NextFunction
   ): void {
     const errors = validationResult(req)
     const check = !errors.isEmpty()
@@ -112,7 +112,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       })
     }
     const formatMethod = this.methods.find(
-      (method) => method.path === methodName,
+      (method) => method.path === methodName
     )
     if (!formatMethod) {
       throw new AdvancedError({
@@ -159,7 +159,7 @@ export default abstract class AbstractController<T extends Model<any>> {
     formatMethod: IMethod,
     req: Request,
     _: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     const { user } = req
     const { possiblePers } = formatMethod
@@ -179,7 +179,7 @@ export default abstract class AbstractController<T extends Model<any>> {
     }
     next()
   }
-  protected preInit() { }
+  protected preInit() {}
   protected generateMethods(): IMethod[] {
     return []
   }
@@ -191,7 +191,7 @@ export default abstract class AbstractController<T extends Model<any>> {
     extraFilter: {
       [key: string]: any
     } = {},
-    ignoreFields?: string[],
+    ignoreFields?: string[]
   ): {
     [key: string]: any
   } {
@@ -207,7 +207,7 @@ export default abstract class AbstractController<T extends Model<any>> {
     }
     for (const key of Object.keys(args)) {
       const field = this.fields.find(
-        ({ name }) => !defaultIgnoreFields.includes(key) && name === key,
+        ({ name }) => !defaultIgnoreFields.includes(key) && name === key
       )
       if (!field) continue
       const val = this.processValue(args[key], field.type)
@@ -260,7 +260,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       new ResponseResult({
         data: await this.model.find(request.query).sort({ _id: 1 }).exec(),
         message: 'Get list successfully.',
-      }),
+      })
     )
   }
   /**
@@ -272,7 +272,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       params: { id: idParam = idQuery as string },
       body: { id = idParam },
     }: Request,
-    res: Response,
+    res: Response
   ) {
     const item: Document = await this.model.findById(id).exec()
     if (!item) {
@@ -284,7 +284,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       new ResponseResult({
         data: item,
         message: 'Get item successfully',
-      }),
+      })
     )
   }
   /**
@@ -296,7 +296,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       new ResponseResult({
         data: await this.model.create(body),
         message: 'Add item successfully',
-      }),
+      })
     )
   }
   /**
@@ -309,7 +309,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       body: { id = idParam, ...body },
       exData,
     }: Request,
-    res: Response,
+    res: Response
   ) {
     const item: Document =
       (exData as Document) || (await this.model.findById(id).exec())
@@ -324,7 +324,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       new ResponseResult({
         message: 'Update item successfully',
         data: item,
-      }),
+      })
     )
   }
   /**
@@ -337,7 +337,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       body: { id = idParam },
       exData,
     }: Request,
-    res: Response,
+    res: Response
   ) {
     const item: Document =
       (exData as Document) || (await this.model.findById(id).exec())
@@ -351,7 +351,7 @@ export default abstract class AbstractController<T extends Model<any>> {
       new ResponseResult({
         message: 'Remove item successfully',
         data: item,
-      }),
+      })
     )
   }
 }

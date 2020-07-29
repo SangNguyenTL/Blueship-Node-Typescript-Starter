@@ -1,0 +1,14 @@
+[
+  {
+    "_id": 0,
+    "name": "Admin",
+    "permissions": [],
+    "status": "ACTIVE"
+  },
+  {
+    "_id": 1,
+    "name": "User",
+    "permissions": [],
+    "status": "ACTIVE"
+  }
+]

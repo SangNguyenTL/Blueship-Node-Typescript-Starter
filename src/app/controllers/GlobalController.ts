@@ -57,20 +57,20 @@ class GlobalController extends AbstractController<any> {
   private async routeRefreshToken(
     { user }: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     await this.handleDoneLogin(
       'Refresh tokken successfully',
       user as IUser,
       res,
-      next,
+      next
     )
   }
 
   private async postSignup(
     { body: { email, password }, body }: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     const user = await User.create({
       ...body,
@@ -92,7 +92,7 @@ class GlobalController extends AbstractController<any> {
         })
       }
       req.login(user, { session: false }, async (e) =>
-        this.handleDoneLogin('Sign in successfully', user, res, next, e),
+        this.handleDoneLogin('Sign in successfully', user, res, next, e)
       )
     })(req, res)
   }
@@ -102,7 +102,7 @@ class GlobalController extends AbstractController<any> {
     user: IUser | null,
     res: Response,
     next: NextFunction,
-    err?: Error,
+    err?: Error
   ) {
     if (!err && user) {
       // generate a signed son web token with the contents of user object and return it in the response
@@ -117,7 +117,7 @@ class GlobalController extends AbstractController<any> {
               }),
               expiresIn: moment().add(this.expiresIn, 'seconds').unix(),
             },
-          }),
+          })
         )
       } catch (error) {
         next(error)

@@ -23,7 +23,7 @@ class ErrorHandler {
     error: any,
     req: Request,
     res: Response,
-    _: NextFunction,
+    _: NextFunction
   ) {
     const { name: errorName } = error
     let { controllerName } = req
@@ -66,7 +66,7 @@ class ErrorHandler {
             controllerName = controllerName
               .split('-')
               .map((word, i) =>
-                i === 0 ? word : word[0].toUpperCase() + word.slice(1),
+                i === 0 ? word : word[0].toUpperCase() + word.slice(1)
               )
               .join('')
             id = [controllerName, ...id]

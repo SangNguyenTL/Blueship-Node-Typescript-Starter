@@ -57,12 +57,12 @@ class UploadService {
           if (
             !flatten(
               Object.keys(UPLOAD.availableMime).map(
-                (field) => UPLOAD.availableMime[field],
-              ),
+                (field) => UPLOAD.availableMime[field]
+              )
             ).includes(file.mimetype)
           ) {
             throw new Error(
-              'Uploaded file is not a valid image. Only image and pdf',
+              'Uploaded file is not a valid image. Only image and pdf'
             )
           }
           cb(null, true)
@@ -81,7 +81,7 @@ class UploadService {
   public static getPublicUrl(
     category: string,
     objectId: string,
-    originFileName: string,
+    originFileName: string
   ) {
     return [HOST_URL, category, objectId, originFileName].join('/')
   }

@@ -8,13 +8,13 @@ export type Next = NextFunction
 export type RequestHandler = (
   req: Request,
   res: Response,
-  next: Next,
+  next: Next
 ) => Promise<void> | void
 export type ErrorHandler = (
   err: Error,
   req: Request,
   res: Response,
-  next: Next,
+  next: Next
 ) => void
 export type Middleware = RequestHandler | ErrorHandler
 
@@ -53,7 +53,7 @@ function generate(handlers: Handler[]) {
     errMain: Error | null,
     req: Request,
     res: Response,
-    done: Next,
+    done: Next
   ) {
     let index = -1
 

@@ -19,8 +19,8 @@ const logger = winston.createLogger({
           level = level.replace(obj.regex, obj.color('$1'))
         })
         return `${timestamp} [${level}] ${message}`
-      },
-    ),
+      }
+    )
   ),
   transports: [
     new winston.transports.Console({
@@ -62,7 +62,7 @@ function traceCaller(lineNumber: number) {
   if (endIndexOfCallerName < 0) endIndexOfCallerName = stack.length
   startIndexOfCallerName = Math.max(
     stack.lastIndexOf(' ', endIndexOfCallerName),
-    stack.lastIndexOf('/', endIndexOfCallerName),
+    stack.lastIndexOf('/', endIndexOfCallerName)
   )
   endIndexOfCallerName = stack.lastIndexOf(':', endIndexOfCallerName)
   stack = stack.substring(startIndexOfCallerName + 1, endIndexOfCallerName)

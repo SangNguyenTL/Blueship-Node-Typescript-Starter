@@ -30,7 +30,7 @@ app
       console.log(
         '  App is running at http://localhost:%d in %s mode',
         express.get('port'),
-        express.get('env'),
+        express.get('env')
       )
       getIps().forEach((ip) => {
         // tslint:disable-next-line: no-console
@@ -38,7 +38,7 @@ app
           '  App is running at http://%s:%d in %s mode',
           ip,
           express.get('port'),
-          express.get('env'),
+          express.get('env')
         )
       })
       // tslint:disable-next-line: no-console

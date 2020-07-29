@@ -77,7 +77,7 @@ class App {
         store: new this.MongoStore({
           mongooseConnection: this.connection,
         }),
-      }),
+      })
     )
     this.express.use(passport.session())
     this.express.use(
@@ -87,7 +87,7 @@ class App {
             logger.info(text)
           },
         },
-      }),
+      })
     )
     this.express.disable('x-powered-by')
     this.express.disable('etag')
@@ -96,7 +96,7 @@ class App {
         frameguard: true,
         xssFilter: true,
         noSniff: true,
-      }),
+      })
     )
     this.express.use(nocache())
 
@@ -115,7 +115,7 @@ class App {
       '/image',
       express.static(path.join(__dirname, 'public/image'), {
         maxAge: 1000 * 60 * 60 * 24 * 30,
-      }),
+      })
     )
   }
 

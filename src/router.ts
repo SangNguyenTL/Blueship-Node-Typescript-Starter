@@ -36,7 +36,7 @@ class Routes {
     const controllerDirectory = path.resolve(__dirname, 'app/controllers')
     let controllerFiles = fs.readdirSync(controllerDirectory) || []
     controllerFiles = controllerFiles.filter(
-      (fileName) => !/\.d\.ts$/.test(fileName) && /\.(ts|js)$/.test(fileName),
+      (fileName) => !/\.d\.ts$/.test(fileName) && /\.(ts|js)$/.test(fileName)
     )
     logger.debug(`List controllers: ${controllerFiles.join(', ')}`)
     await Bluebird.map(controllerFiles, async (fileName) => {
@@ -131,7 +131,7 @@ class Routes {
           // register route
           registerRoute(pRoute, ...args)
         })
-      },
+      }
     )
     return this
   }
@@ -149,7 +149,7 @@ class Routes {
       new ResponseResult({
         message: 'Get route list',
         data: list,
-      }),
+      })
     )
   }
 
@@ -157,7 +157,7 @@ class Routes {
     ignoreExpiration: boolean,
     req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
   ) {
     return passport.authenticate(
       ignoreExpiration ? 'jwt-ignoreExpiration' : 'jwt',
@@ -178,7 +178,7 @@ class Routes {
         }
         req.user = user
         return next()
-      },
+      }
     )(req, res)
   }
 }
