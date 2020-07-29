@@ -4,6 +4,9 @@ import { compose } from '@/app/utils/compose-middleware'
 import { NextFunction, Request, Response } from 'express-serve-static-core'
 import { checkSchema, validationResult } from 'express-validator'
 import { Document, Model, Types } from 'mongoose'
+import { get } from 'lodash'
+import logger from '../utils/logger'
+import DataNotFoundError from './DataNotFoundError'
 
 export default abstract class AbstractController<T extends Model<any>> {
   public name: string
@@ -19,7 +22,7 @@ export default abstract class AbstractController<T extends Model<any>> {
     this.processFilter = this.processFilter.bind(this)
     if (model) {
       this.model = model
-      this.isCreator = this.isCreator.bind(this)
+      this.isOwner = this.isOwner.bind(this)
       this.list = this.list.bind(this)
       this.add = this.add.bind(this)
       this.getByID = this.getByID.bind(this)
@@ -35,7 +38,7 @@ export default abstract class AbstractController<T extends Model<any>> {
     this.preInit()
     this.methods = this.generateMethods()
   }
-  public async isCreator(req: Request) {
+  public async isOwner(req: Request) {
     try {
       const {
         query: { id: idQuery },
@@ -44,12 +47,25 @@ export default abstract class AbstractController<T extends Model<any>> {
         user,
       } = req
       const item = await this.model.findById(id).exec()
-      const flag = item && item.creator.id === (user as IUser).id
+      if (!item) throw { code: 404, modelName: this.model.modelName, id }
+      let isOwner = false
+      if (this.model.modelName === 'User') {
+        console.log(this.model.modelName)
+        isOwner = item && item.id === (user as IUser).id
+      } else {
+        isOwner = get(item, 'creator.id') === (user as IUser).id
+      }
       if (item) {
         req.exData = item
       }
-      return flag
+      return isOwner
     } catch (error) {
+      if (error.code === 404) {
+        throw new DataNotFoundError(
+          `${error.modelName} id ${error.id} not found.`
+        )
+      }
+      logger.error(error)
       return false
     }
   }
@@ -135,7 +151,7 @@ export default abstract class AbstractController<T extends Model<any>> {
     if (
       Array.isArray(possiblePers) &&
       possiblePers.length > 0 &&
-      !(await this.isCreator(req)) &&
+      !(await this.isOwner(req)) &&
       !user.hasPermission(possiblePers)
     ) {
       throw new AdvancedError({
@@ -166,7 +182,7 @@ export default abstract class AbstractController<T extends Model<any>> {
     if (
       Array.isArray(possiblePers) &&
       possiblePers.length > 0 &&
-      !(await this.isCreator(req)) &&
+      !(await this.isOwner(req)) &&
       !(user as IUser).hasPermission(possiblePers)
     ) {
       throw new AdvancedError({

@@ -10,7 +10,7 @@ class UserController extends AbstractController<Model<IUser>> {
   protected generateMethods(): IMethod[] {
     this.getCurrentUser = this.getCurrentUser.bind(this)
     return [
-      { path: 'getCurrentUser', _ref: this.getCurrentUser, type: 'GET' },
+      { path: 'current', _ref: this.getCurrentUser, type: 'GET' },
       {
         path: ':id',
         _ref: this.update,

@@ -13,10 +13,10 @@ export default class AdvancedError extends Error {
   public name: string
   public statusCode: number
   public errors: IValidationError
-  constructor(errors: IValidationError) {
+  constructor(errors: IValidationError, statusCode?: number) {
     super('ValidationError')
     this.name = 'ValidationError'
-    this.statusCode = 400
+    this.statusCode = statusCode || 400
     this.errors = errors
   }
 

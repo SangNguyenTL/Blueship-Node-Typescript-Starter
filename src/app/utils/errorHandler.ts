@@ -7,8 +7,8 @@ import {
 import logger from './logger'
 
 interface IResponse<T extends any> {
-  status: string
-  statusCode: number
+  status?: string
+  statusCode?: number
   message: string
   data?: T
 }
@@ -31,6 +31,9 @@ class ErrorHandler {
     const adapter: {
       [key: string]: (args: any) => IResponse<IHandledError>
     } = {
+      DataNotFoundError: (err) => {
+        return { statusCode: 404, message: err.message }
+      },
       ValidationError: (err: {
         name: string
         message: string
@@ -77,7 +80,7 @@ class ErrorHandler {
         if (!message) message = listMessage.join('. ')
         return {
           status: errorName as string,
-          statusCode: 400,
+          statusCode,
           data,
           message,
         }
@@ -96,8 +99,9 @@ class ErrorHandler {
       error && error.name && adapter[error.name]
         ? adapter[error.name]
         : adapter.default
-
-    res.status(200).send(factory(error)).end()
+    const body = factory(error)
+    const statusCode = body.statusCode === 404 ? 404 : 200
+    res.status(statusCode).send(body).end()
   }
   public PageNotFound(req: Request, res: Response, _err: ErrorRequestHandler) {
     res

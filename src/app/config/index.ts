@@ -154,6 +154,7 @@ class AppConfig {
   }
 
   private setValue(name: string, val: any) {
+    logger.debug(`Set env: ${name}: ${val}`)
     Object.assign(this, { [name]: val })
   }
 }

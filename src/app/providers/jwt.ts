@@ -10,10 +10,14 @@ const JWTStrategy = passportJWT.Strategy
 function jwtStrategy(options?: {
   ignoreExpiration: boolean
 }): passport.Strategy {
+  let jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken()
+  if (config.JWT_HEADER !== 'Bearer') {
+    jwtFromRequest = ExtractJWT.fromHeader(config.JWT_HEADER)
+  }
   let defaultOptions: passportJWT.StrategyOptions = {
-    jwtFromRequest: ExtractJWT.fromHeader(config.JWT_HEADER),
+    jwtFromRequest,
     secretOrKey: config.JWT_SECRET,
-    issuer: config.JWT_ISSUER
+    issuer: config.JWT_ISSUER,
   }
   if (typeof options === 'object') {
     defaultOptions = {

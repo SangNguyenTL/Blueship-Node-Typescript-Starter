@@ -8,12 +8,12 @@ export const PrivateFields = {
     unique: 'Email {VALUE} already exists',
     required: true,
   },
+  role: { type: Number, ref: 'Role', default: 1 },
 }
 
 const userSchema = new mongoose.Schema(
   {
     ...PrivateFields,
-    role: { type: Number, ref: 'Role' },
     password: { type: String },
     firstName: { type: String, required: true, maxlength: 60 },
     lastName: { type: String, required: true, maxlength: 60 },

@@ -8,7 +8,7 @@ import GlobalValidationSchema from '@/app/validates/GlobalValidationSchema'
 import { NextFunction, Request, Response } from 'express-serve-static-core'
 import moment from 'moment'
 import passport from 'passport'
-const { JWT_SECRET } = config
+const { JWT_SECRET, JWT_ISSUER } = config
 
 class GlobalController extends AbstractController<any> {
   private tokenGenerator: TokenGenerator
@@ -19,7 +19,7 @@ class GlobalController extends AbstractController<any> {
     super()
     this.expiresIn = 60 * 60 * 24 * 30
     this.tokenGenerator = new TokenGenerator(JWT_SECRET, {
-      issuer: 'ApiAuth',
+      issuer: JWT_ISSUER,
       expiresIn: this.expiresIn,
     })
     this.handleDoneLogin = this.handleDoneLogin.bind(this)
