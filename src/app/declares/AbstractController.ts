@@ -50,7 +50,6 @@ export default abstract class AbstractController<T extends Model<any>> {
       if (!item) throw { code: 404, modelName: this.model.modelName, id }
       let isOwner = false
       if (this.model.modelName === 'User') {
-        console.log(this.model.modelName)
         isOwner = item && item.id === (user as IUser).id
       } else {
         isOwner = get(item, 'creator.id') === (user as IUser).id
