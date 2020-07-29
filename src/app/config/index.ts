@@ -49,6 +49,8 @@ class AppConfig {
 
   public JWT_SECRET: string
 
+  public JWT_ISSUER: string
+
   public JWT_HEADER: string = 'x-access-token'
 
   public UPLOAD: IUploadConfig = {
@@ -101,6 +103,11 @@ class AppConfig {
       name: 'JWT_SECRET',
       check: (val: any) => isString(val) && !isBlank(val),
       message: 'No jw secret. Set JWT_SECRET environment variable.',
+    },
+    {
+      name: 'JWT_ISSUER',
+      check: (val: any) => isString(val) && !isBlank(val),
+      message: 'No jw issuer. Set JWT_ISSUER environment variable.',
     },
   ]
 

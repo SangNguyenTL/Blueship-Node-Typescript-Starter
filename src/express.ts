@@ -60,7 +60,7 @@ class App {
       useFindAndModify: false,
       useUnifiedTopology: true,
     })
-    logger.debug('Connected db successfully')
+    logger.info('Connected db successfully')
     this.connection = mongoose.connection
   }
 

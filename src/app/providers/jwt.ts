@@ -13,6 +13,7 @@ function jwtStrategy(options?: {
   let defaultOptions: passportJWT.StrategyOptions = {
     jwtFromRequest: ExtractJWT.fromHeader(config.JWT_HEADER),
     secretOrKey: config.JWT_SECRET,
+    issuer: config.JWT_ISSUER
   }
   if (typeof options === 'object') {
     defaultOptions = {

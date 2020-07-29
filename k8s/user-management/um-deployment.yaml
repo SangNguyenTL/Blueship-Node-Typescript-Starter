@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-management
+  labels:
+    name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-management
+  template:
+    metadata:
+      labels:
+        app: user-management
+    spec:
+      containers:
+        - name: usrm
+          image: usrm:latest # update
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 500m
+          env:
+            - name: CONTAINER_NAME
+              value: user-management
+            - name: MONGODB_URI
+              value: mongodb://root:NWXcTj8qPZ@my-release-mongodb.default.svc.cluster.local:27017/usrm
+            - name: HOST_URL
+              valueFrom:
+                secretKeyRef:
+                  name: usrm-credentials
+                  key: BASE_URL
+            - name: API_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: usrm-credentials
+                  key: API_BASE_URL
+            - name: NODE_ENV
+              value: production
+            - name: JWT_ISSUER
+              valueFrom:
+                secretKeyRef:
+                  name: usrm-credentials
+                  key: JWT_ISSUER
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: usrm-credentials
+                  key: JWT_SECRET
+            - name: SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: usrm-credentials
+                  key: JWT_SECRET
+            - name: PORT
+              value: "80"
+      restartPolicy: Always
